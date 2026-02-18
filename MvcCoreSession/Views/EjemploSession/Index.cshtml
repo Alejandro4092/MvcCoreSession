@@ -1,0 +1,8 @@
+﻿<h1>Ejemplo session</h1>
+<h2 style="color:blue">Nombre session: @Context.Session.GetString("nombre")</h2>
+<h2 style="color:red">Hora Session: @Context.Session.GetString("hora")</h2>
+
+<ul class="list-group">
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionSimple">Session simple</a></li>
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaBytes">Sesion Mascota</a></li>
+</ul>
