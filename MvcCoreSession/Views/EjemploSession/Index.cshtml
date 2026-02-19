@@ -1,8 +1,72 @@
-﻿<h1>Ejemplo session</h1>
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using MvcCoreSession.Helpers
+@model List<Mascota>
+@{
+    Mascota fujur = Context.Session.GetObject<Mascota>("MASCOTAGENERIC");
+    List<Mascota> mascotaslist = Context.Session.GetObject<List<Mascota>>("MASCOTASLIST");
+    string data = Context.Session.GetString("MASCOTAJSON");
+    Mascota mascota = null;
+    @if (Context.Session.GetString("MASCOTAJSON") != null)
+    {
+        mascota = HelperJsonSession.DeserializeObject<Mascota>(data);
+    }
+}
+<h1>Ejemplo session</h1>
 <h2 style="color:blue">Nombre session: @Context.Session.GetString("nombre")</h2>
 <h2 style="color:red">Hora Session: @Context.Session.GetString("hora")</h2>
 
 <ul class="list-group">
     <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionSimple">Session simple</a></li>
     <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaBytes">Sesion Mascota</a></li>
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaCollectionBytes">Sesion Mascota Collection</a></li>
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaJson">Sesion Mascota Json</a></li>
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaGeneric">Sesion Mascota Generic</a></li>
+    <li class="list-group-item"><a asp-controller="EjemploSession" asp-action="SessionMascotaCollectionGeneric">Sesion Mascota Collection Generic</a></li>
 </ul>
+@if (fujur != null)
+{
+    <h1>Nombre: @fujur.Nombre, Raza: @fujur.Raza, Edad: @fujur.Edad</h1>
+}
+
+@if (mascota != null)
+{
+    <h1>Nombre: @mascota.Nombre, Raza: @mascota.Raza, Edad: @mascota.Edad</h1>
+}
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                   Nombre
+                </th>
+                <th>
+                   Raza
+                </th>
+                <th>
+                    Edad
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Raza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Edad)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
